@@ -1,0 +1,20 @@
+applications:
+  - name: n8n-app
+    type: "nodejs:18"  # Specify the Node.js runtime version
+
+    hooks:
+      build: |
+       npm install n8n -g
+
+      deploy: |
+        
+        npm build
+
+    web:
+      commands:
+        start: "npm start"
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: n8n-app:http
